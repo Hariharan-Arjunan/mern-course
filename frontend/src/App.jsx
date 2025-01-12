@@ -3,20 +3,33 @@ import React from "react";
 import Header from "./components/Header";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
-import { Outlet, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import CreateProduct from "./pages/CreateProduct";
 import EditProduct from "./pages/EditProduct";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
   return (
     <div>
       <Header />
-      {/* <Outlet /> */}
-      {/* OLD CODE */}
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute allowedRoles={["Admin", "User"]}>
+              <HomePage />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/create" element={<CreateProduct />} />
+        <Route
+          path="/create"
+          element={
+            <ProtectedRoute allowedRoles={["Admin"]}>
+              <CreateProduct />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/edit/:id" element={<EditProduct />} />
         <Route path="*" element={<p>Page Not Found...</p>} />
       </Routes>

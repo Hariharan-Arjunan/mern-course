@@ -1,20 +1,27 @@
 // eslint-disable-next-line no-unused-vars
 import axios from "axios";
+// eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
-// import { useAuthContect } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // const stateData = useAuthContect();
-  // console.log(stateData);
+  const { setAuth } = useAuth();
+  const navigate = useNavigate();
+
   const handleLogin = async () => {
     try {
       const response = await axios.post("http://localhost:5000/api/login", {
         username,
         password,
       });
-      console.log(response);
+      const { accessToken, role } = response?.data || {};
+      sessionStorage.setItem("auth_token", accessToken);
+      sessionStorage.setItem("role", role);
+      setAuth({ token: accessToken, role });
+      navigate("/");
     } catch (error) {
       console.log(error);
     }

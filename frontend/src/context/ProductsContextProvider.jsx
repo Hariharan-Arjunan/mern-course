@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { createContext, useContext, useReducer } from "react";
 
 export const INITIAL_VALUE = {
@@ -41,6 +42,7 @@ const ProductsContextReducer = (state, action) => {
   }
 };
 
+// eslint-disable-next-line react/prop-types
 const ProductsProvider = ({ children, updates = INITIAL_VALUE }) => {
   const [state, dispatch] = useReducer(ProductsContextReducer, updates);
 

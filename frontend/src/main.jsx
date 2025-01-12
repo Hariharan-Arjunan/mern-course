@@ -9,12 +9,12 @@ import { AuthProvider } from "./context/AuthContext";
 
 createRoot(document.getElementById("root")).render(
   <>
-    <ProductsProvider>
-      <AuthProvider>
+    <AuthProvider>
+      <ProductsProvider>
         <BrowserRouter>
           <App />
         </BrowserRouter>
-      </AuthProvider>
-    </ProductsProvider>
+      </ProductsProvider>
+    </AuthProvider>
   </>
 );

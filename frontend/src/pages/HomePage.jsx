@@ -1,28 +1,35 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import "./HomePage.css";
 import Products from "../components/Products/Products";
 import { useProductsContext } from "../context/ProductsContextProvider";
-// import { useProductsStore } from "../store/products";
+import { useNavigate } from "react-router-dom";
+import api from "../helper/axios";
 
 const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-  // const { products, getProducts } = useProductsStore();
   const { state, dispatch } = useProductsContext();
-  console.log({ state, dispatch });
+  const navigate = useNavigate("");
   const fetchProducts = async () => {
     setLoading(true);
     setIsError(false);
     try {
-      const response = await axios.get("http://localhost:5000/api/products");
+      const response = await api.get(
+        `${import.meta.env.VITE_REACT_API}/api/products`
+      );
+      console.log(response);
       dispatch({
         type: "setProducts",
         payload: response?.data?.data,
       });
     } catch (error) {
       console.log({ error });
+      if (error?.response?.data?.error?.message === "jwt expired") {
+        sessionStorage.clear();
+        console.log("Entering loop");
+        navigate("/login");
+      }
       setIsError(true);
     }
     setLoading(false);
@@ -42,9 +49,8 @@ const HomePage = () => {
   // };
 
   useEffect(() => {
-    // getProducts();
-    setLoading(false);
     fetchProducts();
+    setLoading(false);
   }, []);
 
   return (

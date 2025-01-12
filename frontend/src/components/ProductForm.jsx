@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
+import api from "../helper/axios";
 
 const productSchema = z.object({
   name: z.string().min(3).max(20),
@@ -33,7 +34,9 @@ const ProductForm = ({ intialValues = {} }) => {
     try {
       if (intialValues?._id) {
         const response = await axios.put(
-          `http://localhost:5000/api/products?id=${intialValues?._id}`,
+          `${import.meta.env.VITE_REACT_API}/api/products?id=${
+            intialValues?._id
+          }`,
           {
             ...values,
           }
@@ -42,8 +45,8 @@ const ProductForm = ({ intialValues = {} }) => {
           navigate("/");
         }
       } else {
-        const response = await axios.post(
-          "http://localhost:5000/api/products",
+        const response = await api.post(
+          `${import.meta.env.VITE_REACT_API}/api/products`,
           {
             ...values,
           }

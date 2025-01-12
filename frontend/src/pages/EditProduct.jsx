@@ -3,16 +3,14 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ProductForm from "../components/ProductForm";
 import { useProductsContext } from "../context/ProductsContextProvider";
-import { useProductsStore } from "../store/products";
 
 const EditProduct = () => {
   const [product, setProduct] = useState({});
-  // const { state } = useProductsContext();
-  const { products } = useProductsStore();
+  const { state } = useProductsContext();
   const { id } = useParams();
 
   useEffect(() => {
-    const data = products?.find((x) => x._id === id);
+    const data = state?.products?.find((x) => x._id === id);
     setProduct(data);
   }, []);
 

@@ -1,42 +1,19 @@
-import React, { createContext, useContext, useReducer, useState } from "react";
+// eslint-disable-next-line no-unused-vars
+import React, { createContext, useContext, useEffect, useState } from "react";
 
-const INITIAL_VALUE = {
-  token: "",
-  role: "",
-};
+const AuthContext = createContext(undefined);
 
-const AuthContext = createContext(INITIAL_VALUE);
+const useAuth = () => useContext(AuthContext);
 
-const useAuthContect = () => useContext(AuthContext);
+// eslint-disable-next-line react/prop-types
+const AuthProvider = ({ children }) => {
+  const [auth, setAuth] = useState({});
 
-const setState = (state, value) => {
-  console.log({ state, value });
-  return {
-    ...state,
-    ...value,
-  };
-};
-
-const AuthContextReducer = (state, action) => {
-  console.log({ state, action });
-  switch (action.type) {
-    case "setState":
-      return setState(state, action.payload);
-    default:
-      return {
-        ...state,
-        ...action?.payload,
-      };
-  }
-};
-
-const AuthProvider = ({ children, updates = INITIAL_VALUE }) => {
-  const [state, dispatch] = useReducer(AuthContextReducer, updates);
   return (
-    <AuthContext.Provider value={{ state, dispatch }}>
+    <AuthContext.Provider value={{ auth, setAuth }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export { AuthProvider, useAuthContect };
+export { AuthProvider, useAuth };

@@ -5,26 +5,23 @@ import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useProductsContext } from "../../context/ProductsContextProvider";
-import { useProductsStore } from "../../store/products";
 
 const ProductCard = ({ data, key }) => {
-  const { deleteProduct } = useProductsStore();
-  // const { dispatch } = useProductsContext();
+  const { dispatch } = useProductsContext();
   const navigate = useNavigate();
+
   const handleDelete = async (id) => {
-    deleteProduct(id);
-    // try {
-    // await axios.delete(`http://localhost:5000/api/products`, {
-    //   params: { id: id },
-    // });
-    // dispatch({
-    //   type: "deleteProduct",
-    //   payload: id,
-    // });
-    // fetchProducts();
-    // } catch (er) {
-    //   console.log(er);
-    // }
+    try {
+      await axios.delete(`${import.meta.env.VITE_REACT_API}/api/products`, {
+        params: { id: id },
+      });
+      dispatch({
+        type: "deleteProduct",
+        payload: id,
+      });
+    } catch (er) {
+      console.log(er);
+    }
   };
 
   return (
@@ -39,7 +36,6 @@ const ProductCard = ({ data, key }) => {
           <button
             onClick={() => {
               navigate(`/edit/${data._id}`);
-              // handleDelete(data._id);
             }}
           >
             Edit

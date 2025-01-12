@@ -3,9 +3,13 @@ import React from "react";
 import "./Header.css";
 import { Link } from "react-router-dom";
 import { useProductsContext } from "../context/ProductsContextProvider";
+import { useAuth } from "../context/AuthContext";
 
 const Header = () => {
   const { state, dispatch } = useProductsContext();
+
+  const { auth } = useAuth();
+
   console.log({ state, dispatch });
   return (
     <>
@@ -15,6 +19,15 @@ const Header = () => {
         <nav>
           <Link to="/">Home</Link>
           <Link to="/create">Create</Link>
+          {auth?.token && (
+            <button
+              onClick={() => {
+                sessionStorage.clear();
+              }}
+            >
+              Log Out
+            </button>
+          )}
         </nav>
       </div>
     </>

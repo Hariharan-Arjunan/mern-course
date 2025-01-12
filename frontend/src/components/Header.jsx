@@ -2,8 +2,11 @@
 import React from "react";
 import "./Header.css";
 import { Link } from "react-router-dom";
+import { useProductsContext } from "../context/ProductsContextProvider";
 
 const Header = () => {
+  const { state, dispatch } = useProductsContext();
+  console.log({ state, dispatch });
   return (
     <>
       <div className="header">

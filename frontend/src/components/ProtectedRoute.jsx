@@ -17,8 +17,7 @@ const ProtectedRoute = ({ children, allowedRoles = [] }) => {
     if ((token === null || token === undefined) && !availableToken) {
       navigate("/login");
     }
-    console.log(allowedRoles);
-    console.log(!allowedRoles.includes(role));
+
     if (token && !allowedRoles.includes(role)) {
       navigate("/");
     }

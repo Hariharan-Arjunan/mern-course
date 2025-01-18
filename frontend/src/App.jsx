@@ -7,6 +7,7 @@ import { Route, Routes } from "react-router-dom";
 import CreateProduct from "./pages/CreateProduct";
 import EditProduct from "./pages/EditProduct";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Hooks from "./components/Hooks";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        <Route path="/hooks" element={<Hooks />} />
         <Route path="/login" element={<LoginPage />} />
         <Route
           path="/create"

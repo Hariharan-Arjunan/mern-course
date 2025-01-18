@@ -2,15 +2,12 @@
 import React from "react";
 import "./Header.css";
 import { Link } from "react-router-dom";
-import { useProductsContext } from "../context/ProductsContextProvider";
+// import { useProductsContext } from "../context/ProductsContextProvider";
 import { useAuth } from "../context/AuthContext";
 
 const Header = () => {
-  const { state, dispatch } = useProductsContext();
+  const { auth, setAuth } = useAuth();
 
-  const { auth } = useAuth();
-
-  console.log({ state, dispatch });
   return (
     <>
       <div className="header">
@@ -23,6 +20,7 @@ const Header = () => {
             <button
               onClick={() => {
                 sessionStorage.clear();
+                setAuth({});
               }}
             >
               Log Out

@@ -13,7 +13,7 @@ const Header = () => {
       <div className="header">
         <h1 className="logo">Product Store</h1>
         <input />
-        <nav>
+        <nav className="flex gap-[10px]">
           <Link to="/">Home</Link>
           <Link to="/create">Create</Link>
           {auth?.token && (

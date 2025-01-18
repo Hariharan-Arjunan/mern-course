@@ -56,6 +56,7 @@ const HomePage = () => {
   return (
     <div>
       <h1>Home Page</h1>
+      <h1 className="text-purple text-6xl">Hello world!</h1>
       {loading && <h2>Loading...</h2>}
       {isError && <h2>Something went wrong...</h2>}
       <Products products={state?.products} />
